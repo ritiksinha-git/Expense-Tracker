@@ -5,15 +5,15 @@
 </head>
 <body>
     <form onsubmit="saveToLocalStorage(event)">
-        <h1> Expense Tracker</h1>
+        <h1 class="heading">Expense Tracker</h1>
         <hr>
         <label>Choose Expense Amount</label>
         <input id = 'amount' type="number" name="amount" required/>
-        <label>Choose Description</label>
-        <input id = 'description' type="text" name="addDiscription" required/>
+        <label>Choose Discription</label>
+        <input id = 'discription' type="text" name="addDiscription" required/>
         <label>Choose a Catagory</label>
         <select name="category" id="category" required>
-            <option value="selection"> Select an option</option>
+            <option value="selection" >Select an option</option>
             <option value="shopping">Shopping</option>
             <option value="movies">Movies</option>
             <option value="groceries">Groceries</option>
@@ -26,17 +26,17 @@
         function saveToLocalStorage(event) {
            event.preventDefault();
            const addAmount = event.target.amount.value;
-           const description= event.target.addDiscription.value;
+           const discription= event.target.addDiscription.value;
            const category = event.target.category.value;
 
 
            const obj = {
                addAmount,
-               description,
+               discription,
                category
 
            }
-           localStorage.setItem(obj.description, JSON.stringify(obj))
+           localStorage.setItem(obj.discription, JSON.stringify(obj))
            showNewExpenseOnScreen(obj)
        }
 
@@ -53,23 +53,23 @@
        })
 
        function showNewExpenseOnScreen(user){
-           document.getElementById('description').value = '';
+           document.getElementById('discription').value = '';
            document.getElementById('amount').value = '';
            document.getElementById('category').value ='';
 
 
 
            const parentNode = document.getElementById('listOfExpenses');
-           const childHTML = `<li id=${user.description} > ${user.addAmount} - ${user.description} - ${user.category} 
-                                   <button class='deletbutton' onclick=deleteExpense('${user.description}')> Delete Expense </button>
-                                   <button class='editbutton' onclick=editExpenseDetails('${user.description}','${user.addAmount}','${user.category}')>Edit Expense </button>
+           const childHTML = `<li id=${user.discription} > ${user.addAmount} - ${user.discription} - ${user.category} 
+                                   <button class='deletbutton' onclick=deleteExpense('${user.discription}')> Delete Expense </button>
+                                   <button class='editbutton' onclick=editExpenseDetails('${user.discription}','${user.addAmount}','${user.category}')>Edit Expense </button>
                                 </li>`
 
            parentNode.innerHTML = parentNode.innerHTML + childHTML;
        }
-       // Edit expense details
+       // editExpenseDetails
        function editExpenseDetails(addDiscription, amount, category ){
-           document.getElementById('description').value = addDiscription;
+           document.getElementById('discription').value = addDiscription;
            document.getElementById('amount').value = amount;
            document.getElementById('category').value = category;
 
@@ -79,7 +79,7 @@
 
        }
 
-       // deleteEpense
+       // deleteExpense
 
        function deleteExpense(addDiscription){
            console.log(addDiscription)

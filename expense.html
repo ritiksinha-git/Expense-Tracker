@@ -1,15 +1,16 @@
 <html>
 <head>
     <title>Expense Tracker</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <form onsubmit="saveToLocalStorage(event)">
         <h1 class="heading">Expense Tracker</h1>
         <hr>
         <label>Choose Expense Amount</label>
-        <input id = 'amount' type="number" name="amount" required/>
+        <input id = 'amount' type="number" required/>
         <label>Choose Description</label>
-        <input id = 'description' type="text" name="addDescription" required/>
+        <input id = 'description' type="text"  required/>
         <label>Choose a Catagory</label>
         <select name="category" id="category" required>
             <option value="selection" >Select an option</option>
@@ -25,19 +26,19 @@
     <script>
         function saveToLocalStorage(event) {
            event.preventDefault();
-           const addAmount = event.target.amount.value;
-           const description= event.target.addDescription.value;
+           const amount = event.target.amount.value;
+           const description= event.target.description.value;
            const category = event.target.category.value;
 
 
            const obj = {
-               addAmount,
+               amount,
                description,
                category
 
            }
 
-        axios.post("https://crudcrud.com/api/3dfec5c5ee244547bbf1815ebc9e48dc/expenseData", obj)
+        axios.post("https://crudcrud.com/api/328722de8e5f4adb9611b735cbb60328/expenseData", obj)
         .then((res) => {
             showNewExpenseOnScreen(res.data);
             console.log(res);
@@ -48,7 +49,7 @@
        }
 
        window.addEventListener("DOMContentLoaded", () => {
-        axios.get("https://crudcrud.com/api/3dfec5c5ee244547bbf1815ebc9e48dc/expenseData")
+        axios.get("https://crudcrud.com/api/328722de8e5f4adb9611b735cbb60328/expenseData")
         .then((res) => {
             for(var i = 0; i<res.data.length; i++) {
                 showNewExpenseOnScreen(res.data[i])
@@ -68,9 +69,9 @@
 
 
            const parentNode = document.getElementById('listOfExpenses');
-           const childHTML = `<li id=${user._id} > ${user.addAmount} - ${user.description} - ${user.category} 
-                                   <button class='deletbutton' onclick=deleteExpense('${user._id}')> Delete Expense </button>
-                                   <button class='editbutton' onclick=editExpenseDetails('${user.description}','${user.addAmount}','${user.category}','${user._id}')>Edit Expense </button>
+           const childHTML = `<li id=${user._id} > ${user.amount} - ${user.description} - ${user.category} 
+                                   <button onclick=deleteExpense('${user._id}')> Delete Expense </button>
+                                   <button onclick=editExpenseDetails('${user.amount}','${user.description}','${user.category}','${user._id}')>Edit Expense </button>
                                 </li>`
 
            parentNode.innerHTML = parentNode.innerHTML + childHTML;
@@ -78,21 +79,19 @@
 
 
        // editExpenseData
-       function editExpenseDetails(addDescription, amount, category, userId){
-           document.getElementById('description').value = addDescription;
-           document.getElementById('amount').value = amount;
-           document.getElementById('category').value = category;
-
-
-           deleteExpense(userId);
-       }
+       function editExpenseDetails(amount, description, category,userId) {
+        document.getElementById('amount').value = amount;
+        document.getElementById('description').value = description;
+        document.getElementById('category').value =category;
+        deleteExpense(userId)
+}
 
        // deleteExpense
 
        function deleteExpense(userId){
-        axios.delete(`https://crudcrud.com/api/3dfec5c5ee244547bbf1815ebc9e48dc/expenseData/${userId}`)
+        axios.delete(`https://crudcrud.com/api/328722de8e5f4adb9611b735cbb60328/expenseData/${userId}`)
         .then((res) => {
-            console.log(res);
+            removeUserFromScreen(userId)
         })
         .catch((err) => {
             console.log(err);

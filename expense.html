@@ -6,7 +6,7 @@
 <body>
     <form onsubmit="saveToLocalStorage(event)">
         <h1 class="heading">Expense Tracker</h1>
-        <hr>
+        <hr class="hr" </hr>
         <label>Choose Expense Amount</label>
         <input id = 'amount' type="number" required/>
         <label>Choose Description</label>
@@ -38,7 +38,7 @@
 
            }
 
-        axios.post("https://crudcrud.com/api/328722de8e5f4adb9611b735cbb60328/expenseData", obj)
+        axios.post("https://crudcrud.com/api/40cb989fed974269ad60d3bb035e5e4f/expenseData", obj)
         .then((res) => {
             showNewExpenseOnScreen(res.data);
             console.log(res);
@@ -49,12 +49,11 @@
        }
 
        window.addEventListener("DOMContentLoaded", () => {
-        axios.get("https://crudcrud.com/api/328722de8e5f4adb9611b735cbb60328/expenseData")
+        axios.get("https://crudcrud.com/api/40cb989fed974269ad60d3bb035e5e4f/expenseData")
         .then((res) => {
             for(var i = 0; i<res.data.length; i++) {
                 showNewExpenseOnScreen(res.data[i])
             }
-       
         })
              .catch((err) =>{
                console.log(err);  
@@ -65,8 +64,6 @@
            document.getElementById('description').value = '';
            document.getElementById('amount').value = '';
            document.getElementById('category').value ='';
-
-
 
            const parentNode = document.getElementById('listOfExpenses');
            const childHTML = `<li id=${user._id} > ${user.amount} - ${user.description} - ${user.category} 
@@ -89,7 +86,7 @@
        // deleteExpense
 
        function deleteExpense(userId){
-        axios.delete(`https://crudcrud.com/api/328722de8e5f4adb9611b735cbb60328/expenseData/${userId}`)
+        axios.delete(`https://crudcrud.com/api/40cb989fed974269ad60d3bb035e5e4f/expenseData/${userId}`)
         .then((res) => {
             removeUserFromScreen(userId)
         })

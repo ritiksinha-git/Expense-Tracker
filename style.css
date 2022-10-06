@@ -4,4 +4,10 @@ body{
 
 .heading{
     align-content: center;
+    padding: auto;
+
+}
+
+.hr{
+    outline-color: black;
 }
